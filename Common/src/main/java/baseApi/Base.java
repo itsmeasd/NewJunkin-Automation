@@ -1,23 +1,23 @@
 package baseApi;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class Base {
     @BeforeMethod
     public void setUp(@Optional("false")boolean useSauceLabs,@Optional("rahmanww")String userName,
                       @Optional("ssk")String key, @Optional("WIN8")String os,@Optional("firefox") String browserName,
-                      @Optional("35")String browserVersion,@Optional("http://piit.us") String url)throws IOException{
+                      @Optional("37")String browserVersion,@Optional("http://piit.us") String url)throws IOException{
         if(useSauceLabs == true){
             setUpCloudEnviornment(userName,key,os,browserName,browserVersion,url);
         }else{
@@ -145,4 +145,19 @@ public class Base {
         Select select = new Select(element);
         select.selectByVisibleText(value);
     }
+    public void getlink(String locator){
+        driver.findElement(By.linkText(locator)).findElement(By.tagName("a")).getText();
+    }
+    public void waitUnitVisible(String locator){
+        WebDriverWait wait = new WebDriverWait(driver,10);
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+    }
+    public void  (){
+
+    }
+    public void takeScreenShot() throws IOException{
+        File file = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(file,new File("screenShot"));
+    }
+    public void
 }
